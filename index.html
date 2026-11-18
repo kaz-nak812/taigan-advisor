@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>子宮体癌 術後補助治療ガイド</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="体癌Advisor">
+    <meta name="application-name" content="体癌Advisor">
+    <meta name="theme-color" content="#1565c0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --primary-light: #e3f2fd;
+            --primary-dark: #0d47a1;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --text: #263238;
+            --text-secondary: #546e7a;
+            --border: #cfd8dc;
+            --risk-low: #2e7d32;
+            --risk-low-bg: #e8f5e9;
+            --risk-int: #f57f17;
+            --risk-int-bg: #fff8e1;
+            --risk-hi-int: #e65100;
+            --risk-hi-int-bg: #fff3e0;
+            --risk-high: #c62828;
+            --risk-high-bg: #ffebee;
+            --risk-adv: #880e4f;
+            --risk-adv-bg: #fce4ec;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --radius: 12px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { font-size: 15px; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 20px 16px 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; }
+        header p { font-size: 0.75rem; opacity: 0.85; margin-top: 4px; }
+
+        main { padding: 12px; max-width: 600px; margin: 0 auto; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .card-header {
+            background: var(--primary-light);
+            padding: 10px 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            border-bottom: 1px solid #bbdefb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-header .step {
+            background: var(--primary);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        .card-body { padding: 14px 16px; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .form-group label .en {
+            font-weight: 400;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: #fff;
+            color: var(--text);
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23546e7a' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(21,101,192,0.15);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .radio-group label {
+            flex: 1;
+            min-width: calc(33% - 8px);
+            margin-bottom: 0;
+        }
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+        .radio-group .radio-btn {
+            display: block;
+            text-align: center;
+            padding: 9px 6px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            background: #fff;
+        }
+        .radio-group input[type="radio"]:checked + .radio-btn {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 2px 6px rgba(21,101,192,0.3);
+        }
+        .radio-group .radio-btn:active {
+            transform: scale(0.97);
+        }
+        .radio-group input[type="radio"][value="unknown"]:checked + .radio-btn {
+            background: #78909c;
+            border-color: #78909c;
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(120,144,156,0.35);
+        }
+
+        .mol-warn-card-header {
+            background: #fff8e1;
+            color: #bf360c;
+            border-bottom: 1px solid #ffe0b2;
+        }
+        .mol-warn-item {
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border-left: 4px solid;
+        }
+        .mol-warn-item:last-child { margin-bottom: 0; }
+        .mol-warn-item.critical { background: #ffebee; border-left-color: #e53935; }
+        .mol-warn-item.warning  { background: #fff8e1; border-left-color: #fb8c00; }
+        .mol-warn-item.info     { background: #e3f2fd; border-left-color: #1e88e5; }
+        .mol-warn-item h5 { font-size: 0.83rem; font-weight: 700; margin-bottom: 3px; }
+        .mol-warn-item.critical h5 { color: #b71c1c; }
+        .mol-warn-item.warning  h5 { color: #e65100; }
+        .mol-warn-item.info     h5 { color: #1565c0; }
+        .mol-warn-item p { font-size: 0.82rem; line-height: 1.55; margin-bottom: 2px; }
+        .mol-warn-item .alt { font-size: 0.78rem; margin-top: 4px; font-style: italic; opacity: 0.85; }
+        .provisional-badge {
+            display: inline-block;
+            background: #ff8f00;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .btn-assess {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(21,101,192,0.3);
+            transition: all 0.2s;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .btn-assess:active { transform: scale(0.98); opacity: 0.9; }
+        .btn-assess:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-reset {
+            width: 100%;
+            padding: 10px;
+            background: #fff;
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        #result-section { display: none; }
+        #result-section.show { display: block; }
+
+        .result-card {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .result-header {
+            padding: 14px 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-body { padding: 14px 16px; background: #fff; }
+        .result-body h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            margin-top: 12px;
+        }
+        .result-body h4:first-child { margin-top: 0; }
+        .result-body p, .result-body li {
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+        .result-body ul { padding-left: 18px; }
+        .result-body li { margin-bottom: 4px; }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .risk-low .result-header { background: var(--risk-low-bg); color: var(--risk-low); }
+        .risk-low .risk-badge { background: var(--risk-low); color: #fff; }
+        .risk-int .result-header { background: var(--risk-int-bg); color: var(--risk-int); }
+        .risk-int .risk-badge { background: var(--risk-int); color: #fff; }
+        .risk-hi-int .result-header { background: var(--risk-hi-int-bg); color: var(--risk-hi-int); }
+        .risk-hi-int .risk-badge { background: var(--risk-hi-int); color: #fff; }
+        .risk-high .result-header { background: var(--risk-high-bg); color: var(--risk-high); }
+        .risk-high .risk-badge { background: var(--risk-high); color: #fff; }
+        .risk-adv .result-header { background: var(--risk-adv-bg); color: var(--risk-adv); }
+        .risk-adv .risk-badge { background: var(--risk-adv); color: #fff; }
+
+        .treatment-box {
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        .treatment-box.rt { border-left-color: #e65100; }
+        .treatment-box.chemo { border-left-color: #6a1b9a; }
+        .treatment-box.immuno { border-left-color: #00695c; }
+        .treatment-box.hormone { border-left-color: #33691e; }
+        .treatment-box.obs { border-left-color: var(--risk-low); }
+
+        .treatment-box h5 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .treatment-box.rt h5 { color: #e65100; }
+        .treatment-box.chemo h5 { color: #6a1b9a; }
+        .treatment-box.immuno h5 { color: #00695c; }
+        .treatment-box.hormone h5 { color: #33691e; }
+        .treatment-box.obs h5 { color: var(--risk-low); }
+
+        .treatment-box p, .treatment-box li { font-size: 0.82rem; color: var(--text); }
+        .treatment-box ul { padding-left: 16px; margin-top: 4px; }
+
+        .esmo-nccn-tabs {
+            display: flex;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1.5px solid var(--primary);
+        }
+        .esmo-nccn-tabs button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: #fff;
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .esmo-nccn-tabs button.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        .summary-table th, .summary-table td {
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .summary-table th { background: var(--primary-light); font-weight: 600; }
+
+        .note-box {
+            background: #fff3e0;
+            border: 1px solid #ffe0b2;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #e65100;
+        }
+
+        .molecular-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .mol-tag {
+            padding: 3px 10px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .mol-tag.pole-mut { background: #e8f5e9; color: #2e7d32; }
+        .mol-tag.pole-wt { background: #f5f5f5; color: #757575; }
+        .mol-tag.mmr-d { background: #e3f2fd; color: #1565c0; }
+        .mol-tag.mmr-p { background: #f5f5f5; color: #757575; }
+        .mol-tag.p53-abn { background: #ffebee; color: #c62828; }
+        .mol-tag.p53-wt { background: #f5f5f5; color: #757575; }
+        .mol-tag.er-pos { background: #f3e5f5; color: #6a1b9a; }
+        .mol-tag.er-neg { background: #f5f5f5; color: #757575; }
+
+        .ref-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .ref-section .card-header { cursor: pointer; }
+        .ref-section .card-body { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.7; }
+        .ref-section .card-body p { margin-bottom: 6px; }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.72rem;
+            color: #90a4ae;
+            padding: 16px;
+            line-height: 1.6;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 380px) {
+            html { font-size: 14px; }
+            .radio-group label { min-width: calc(50% - 8px); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>子宮体癌 術後補助治療ガイド</h1>
+    <p>ESMO/ESTRO/ESP 2021 &amp; NCCN ガイドライン準拠 | FIGO 2023</p>
+</header>
+
+<main>
+    <!-- Step 1: 組織型 -->
+    <div class="card">
+        <div class="card-header">
+            <span class="step">1</span>
+            組織型・分化度
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>組織型 <span class="en">(Histological Type)</span></label>
+                <select id="histology" onchange="onHistologyChange()">
+                    <option value="">選択してください</option>
+                    <option value="endometrioid">類内膜癌 (Endometrioid)</option>
+                    <option value="serous">漿液性癌 (Serous)</option>
+                    <option value="clear_cell">明細胞癌 (Clear Cell)</option>
+                    <option value="carcinosarcoma">癌肉腫 (Carcinosarcoma)</option>
+                    <option value="undifferentiated">未分化癌 (Undifferentiated)</option>
+                    <option value="dedifferentiated">脱分化癌 (Dedifferentiated)</option>
+                    <option value="mixed">混合癌 (Mixed)</option>
+                    <option value="mucinous">粘液性癌 (Mucinous)</option>
+                </select>
+            </div>
+            <div class="form-group" id="grade-group">
+                <label>分化度 <span class="en">(Grade)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="grade" value="1"><span class="radio-btn">G1</span></label>
+                    <label><input type="radio" name="grade" value="2"><span class="radio-btn">G2</span></label>
+                    <label><input type="radio" name="grade" value="3"><span class="radio-btn">G3</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: FIGO Stage -->
+    <div class="card">
+        <div class="card-header">
+            <span class="step">2</span>
+            FIGO 2023 進行期分類
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>進行期 <span class="en">(FIGO Stage)</span></label>
+                <select id="stage">
+                    <option value="">選択してください</option>
+                    <optgroup label="Stage I: 子宮体部に限局">
+                        <option value="IA">IA - 筋層浸潤なし or &lt;1/2</option>
+                        <option value="IB">IB - 筋層浸潤 ≥1/2</option>
+                    </optgroup>
+                    <optgroup label="Stage II: 子宮頸部間質浸潤">
+                        <option value="II">II - 頸部間質浸潤あり</option>
+                    </optgroup>
+                    <optgroup label="Stage III: 局所進展・リンパ節転移">
+                        <option value="IIIA">IIIA - 漿膜/付属器浸潤</option>
+                        <option value="IIIB">IIIB - 腟/子宮傍組織浸潤</option>
+                        <option value="IIIC1">IIIC1 - 骨盤リンパ節転移</option>
+                        <option value="IIIC2">IIIC2 - 傍大動脈リンパ節転移(±骨盤)</option>
+                    </optgroup>
+                    <optgroup label="Stage IV: 遠隔転移">
+                        <option value="IVA">IVA - 膀胱/腸管粘膜浸潤</option>
+                        <option value="IVB">IVB - 遠隔転移</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: 病理所見 -->
+    <div class="card">
+        <div class="card-header">
+            <span class="step">3</span>
+            病理所見
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>脈管侵襲 <span class="en">(LVSI)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="lvsi" value="none"><span class="radio-btn">なし</span></label>
+                    <label><input type="radio" name="lvsi" value="focal"><span class="radio-btn">限局的 (Focal)</span></label>
+                    <label><input type="radio" name="lvsi" value="substantial"><span class="radio-btn">広範 (Substantial)</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>筋層浸潤 <span class="en">(Myometrial Invasion)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="myo" value="none"><span class="radio-btn">なし</span></label>
+                    <label><input type="radio" name="myo" value="less50"><span class="radio-btn">&lt;1/2</span></label>
+                    <label><input type="radio" name="myo" value="ge50"><span class="radio-btn">≥1/2</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>残存腫瘍 <span class="en">(Residual Disease)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="residual" value="none"><span class="radio-btn">なし (R0)</span></label>
+                    <label><input type="radio" name="residual" value="micro"><span class="radio-btn">微小残存</span></label>
+                    <label><input type="radio" name="residual" value="macro"><span class="radio-btn">肉眼的残存</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: 分子分類 -->
+    <div class="card">
+        <div class="card-header">
+            <span class="step">4</span>
+            分子分類 <span class="en" style="font-weight:400; margin-left:4px">(Molecular Classification)</span>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>POLE変異 <span class="en">(POLE Mutation)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="pole" value="mutated"><span class="radio-btn">変異あり (Mut)</span></label>
+                    <label><input type="radio" name="pole" value="wildtype"><span class="radio-btn">野生型 (WT)</span></label>
+                    <label><input type="radio" name="pole" value="unknown" checked><span class="radio-btn">未検査</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>MMR/MSI <span class="en">(Mismatch Repair)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="mmr" value="dMMR"><span class="radio-btn">dMMR/MSI-H</span></label>
+                    <label><input type="radio" name="mmr" value="pMMR"><span class="radio-btn">pMMR/MSS</span></label>
+                    <label><input type="radio" name="mmr" value="unknown" checked><span class="radio-btn">未検査</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>p53 <span class="en">(免疫染色)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="p53" value="abnormal"><span class="radio-btn">異常 (Abn)</span></label>
+                    <label><input type="radio" name="p53" value="wildtype"><span class="radio-btn">野生型 (WT)</span></label>
+                    <label><input type="radio" name="p53" value="unknown" checked><span class="radio-btn">未検査</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>ER <span class="en">(エストロゲン受容体)</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="er" value="positive"><span class="radio-btn">陽性</span></label>
+                    <label><input type="radio" name="er" value="negative"><span class="radio-btn">陰性</span></label>
+                    <label><input type="radio" name="er" value="unknown" checked><span class="radio-btn">未検査</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 判定ボタン -->
+    <button class="btn-assess" id="btn-assess" onclick="assess()">リスク判定・治療推奨</button>
+    <button class="btn-reset" onclick="resetForm()">リセット</button>
+
+    <!-- 結果セクション -->
+    <div id="result-section">
+        <!-- 分子分類 未確定 警告 -->
+        <div class="card" id="mol-warn-card" style="display:none;">
+            <div class="card-header mol-warn-card-header">⚠️ 分子分類 未確定</div>
+            <div class="card-body" id="mol-warn-body"></div>
+        </div>
+
+        <!-- 入力サマリー -->
+        <div class="card" id="summary-card">
+            <div class="card-header">入力サマリー</div>
+            <div class="card-body" id="summary-body"></div>
+        </div>
+
+        <!-- リスク分類結果 -->
+        <div class="result-card" id="risk-card">
+            <div class="result-header" id="risk-header">
+                <span class="risk-badge" id="risk-badge"></span>
+                <span id="risk-label"></span>
+            </div>
+            <div class="result-body" id="risk-body"></div>
+        </div>
+
+        <!-- 治療推奨 -->
+        <div class="card" id="treatment-card">
+            <div class="card-header">治療推奨</div>
+            <div class="card-body" id="treatment-body">
+                <div class="esmo-nccn-tabs">
+                    <button class="active" onclick="switchTab('esmo')">ESMO/ESTRO/ESP</button>
+                    <button onclick="switchTab('nccn')">NCCN</button>
+                </div>
+                <div id="esmo-content" class="tab-content active"></div>
+                <div id="nccn-content" class="tab-content"></div>
+            </div>
+        </div>
+
+        <!-- 放射線治療詳細 -->
+        <div class="card" id="rt-detail-card">
+            <div class="card-header">放射線治療 詳細プロトコル</div>
+            <div class="card-body" id="rt-detail-body"></div>
+        </div>
+
+        <!-- 分子標的・免疫療法 -->
+        <div class="card" id="molecular-tx-card" style="display:none;">
+            <div class="card-header">分子標的・免疫療法の考慮</div>
+            <div class="card-body" id="molecular-tx-body"></div>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="note-box">
+            本ツールは臨床判断の補助を目的としています。最終的な治療方針は担当医の判断と患者との共有意思決定 (SDM) に基づいて決定してください。個々の患者の状態・合併症・希望に応じた調整が必要です。
+        </div>
+    </div>
+
+    <!-- 参考文献 -->
+    <div class="ref-section">
+        <div class="card-header" onclick="toggleRef()">参考ガイドライン・文献 ▼</div>
+        <div class="card-body" id="ref-body" style="display:none;">
+            <p><strong>1.</strong> Concin N, et al. ESMO-ESTRO-ESP guidelines for the management of patients with endometrial carcinoma. <em>Ann Oncol.</em> 2021;32(6):801-838.</p>
+            <p><strong>2.</strong> NCCN Clinical Practice Guidelines in Oncology: Uterine Neoplasms. Version 1.2024.</p>
+            <p><strong>3.</strong> Berek JS, et al. FIGO staging of endometrial cancer: 2023. <em>Int J Gynaecol Obstet.</em> 2023;162(2):383-394.</p>
+            <p><strong>4.</strong> de Boer SM, et al. (PORTEC-3) Adjuvant chemoradiotherapy versus radiotherapy alone in women with high-risk endometrial cancer. <em>Lancet Oncol.</em> 2019;20(3):318-328.</p>
+            <p><strong>5.</strong> Mirza MR, et al. (RUBY/ENGOT-EN6) Dostarlimab for primary advanced or recurrent endometrial cancer. <em>N Engl J Med.</em> 2023;388(23):2145-2158.</p>
+            <p><strong>6.</strong> Leon-Castillo A, et al. (PORTEC-4a) Molecular classification-directed adjuvant therapy for endometrial cancer. <em>J Clin Oncol.</em> 2024.</p>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        ESMO/ESTRO/ESP 2021 &amp; NCCN準拠<br>
+        FIGO 2023 進行期分類対応<br>
+        分子分類統合リスク評価<br>
+        &copy; 2024 Clinical Decision Support Tool
+    </div>
+</main>
+
+<script>
+'use strict';
+
+function getVal(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+}
+
+function getSelect(id) {
+    return document.getElementById(id).value;
+}
+
+function onHistologyChange() {
+    const h = getSelect('histology');
+    const gradeGroup = document.getElementById('grade-group');
+    if (h === 'endometrioid' || h === 'mucinous' || h === '') {
+        gradeGroup.classList.remove('hidden');
+    } else {
+        gradeGroup.classList.add('hidden');
+    }
+}
+
+function isNonEndometrioid(h) {
+    return ['serous', 'clear_cell', 'carcinosarcoma', 'undifferentiated', 'dedifferentiated'].includes(h);
+}
+
+function isStageI(s) { return s === 'IA' || s === 'IB'; }
+function isStageIII(s) { return ['IIIA','IIIB','IIIC1','IIIC2'].includes(s); }
+function isStageIV(s) { return s === 'IVA' || s === 'IVB'; }
+
+function stageNum(s) {
+    const map = { 'IA':1, 'IB':2, 'II':3, 'IIIA':4, 'IIIB':5, 'IIIC1':6, 'IIIC2':7, 'IVA':8, 'IVB':9 };
+    return map[s] || 0;
+}
+
+function getMolecularWarnings(data) {
+    const { pole, mmr, p53 } = data;
+    const warnings = [];
+
+    if (!p53 || p53 === 'unknown') {
+        warnings.push({
+            level: 'critical',
+            title: 'p53 免疫染色 未実施',
+            body: 'p53異常 (Abn) の場合、臨床病理学的因子に関わらず高リスクに分類されます。現在の分類は暫定的です。p53免疫染色を最優先で実施してください。',
+            alt: '→ p53異常が判明した場合: 高リスク に変更'
+        });
+    }
+
+    if (!pole || pole === 'unknown') {
+        warnings.push({
+            level: 'warning',
+            title: 'POLE 変異検査 未実施',
+            body: 'POLEmut の場合、Stage I-II では低リスクとなり補助療法が不要となる可能性があります (PORTEC-4a支持)。過剰治療回避のため検査を検討してください。',
+            alt: '→ POLEmut が判明した場合: 低リスク に変更 (Stage I-II)'
+        });
+    }
+
+    if (!mmr || mmr === 'unknown') {
+        warnings.push({
+            level: 'info',
+            title: 'MMR/MSI 検査 未実施',
+            body: 'dMMR/MSI-H の場合、進行・再発時の免疫チェックポイント阻害薬の適応が生じます。Lynch症候群スクリーニングとしても重要です。',
+            alt: null
+        });
+    }
+
+    return warnings;
+}
+
+function buildMolecularWarnings(warnings, riskResult) {
+    const card = document.getElementById('mol-warn-card');
+    const body = document.getElementById('mol-warn-body');
+
+    if (warnings.length === 0) {
+        card.style.display = 'none';
+        return;
+    }
+
+    card.style.display = 'block';
+    let html = '';
+
+    const hasCritical = warnings.some(w => w.level === 'critical');
+    if (hasCritical && riskResult.group !== 'high' && riskResult.group !== 'advanced') {
+        html += `<div style="background:#ffebee;border:1px solid #ef9a9a;border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+            <strong style="color:#b71c1c;font-size:0.85rem;">⚠ 現在の分類は暫定的です</strong>
+            <p style="font-size:0.8rem;margin-top:3px;color:#444;">p53検査が未実施のため、高リスクの可能性が除外できていません。分子検査完了後に再度判定してください。</p>
+        </div>`;
+    }
+
+    warnings.forEach(w => {
+        html += `<div class="mol-warn-item ${w.level}">
+            <h5>${w.title}</h5>
+            <p>${w.body}</p>
+            ${w.alt ? `<p class="alt">${w.alt}</p>` : ''}
+        </div>`;
+    });
+
+    body.innerHTML = html;
+}
+
+function _classifyRisk(data) {
+    const { stage, histology, grade, lvsi, pole, p53, mmr } = data;
+    const sn = stageNum(stage);
+
+    if (isStageIV(stage)) {
+        return { group: 'advanced', label: '進行期・転移', cssClass: 'risk-adv' };
+    }
+
+    if (pole === 'mutated') {
+        if (sn <= 3) {
+            return { group: 'low', label: '低リスク', cssClass: 'risk-low',
+                note: 'POLEmut: FIGO 2023ではStage I-IIのPOLEmut症例は予後良好とされます (PORTEC-4a)。' };
+        }
+        if (isStageIII(stage)) {
+            return { group: 'intermediate', label: '中リスク (POLEmut Stage III)',
+                cssClass: 'risk-int',
+                note: 'POLEmut Stage IIIは予後良好の報告がありますが、十分なエビデンスが限られています。個別に検討してください。' };
+        }
+    }
+
+    if (p53 === 'abnormal') {
+        if (stage === 'IA' && (data.myo === 'none') && histology === 'endometrioid') {
+            return { group: 'high', label: '高リスク', cssClass: 'risk-high',
+                note: 'p53異常: 筋層浸潤なしでも高リスクに分類されます。' };
+        }
+        return { group: 'high', label: '高リスク', cssClass: 'risk-high',
+            note: 'p53異常は臨床病理学的因子に関わらず高リスクに分類されます。' };
+    }
+
+    if (isNonEndometrioid(histology)) {
+        return { group: 'high', label: '高リスク', cssClass: 'risk-high',
+            note: '非類内膜型組織型は高リスクに分類されます。' };
+    }
+
+    if (histology === 'mixed') {
+        return { group: 'high', label: '高リスク', cssClass: 'risk-high',
+            note: '混合癌は高リスク成分に基づいて評価します。' };
+    }
+
+    if (isStageIII(stage)) {
+        return { group: 'high', label: '高リスク', cssClass: 'risk-high' };
+    }
+
+    if (stage === 'II') {
+        return { group: 'high', label: '高リスク', cssClass: 'risk-high' };
+    }
+
+    const g = parseInt(grade) || 2;
+
+    if (stage === 'IA') {
+        if (g <= 2) {
+            if (lvsi === 'none') return { group: 'low', label: '低リスク', cssClass: 'risk-low' };
+            if (lvsi === 'focal') return { group: 'intermediate', label: '中リスク', cssClass: 'risk-int' };
+            if (lvsi === 'substantial') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+        }
+        if (g === 3) {
+            if (lvsi === 'none') return { group: 'intermediate', label: '中リスク', cssClass: 'risk-int' };
+            if (lvsi === 'focal') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+            if (lvsi === 'substantial') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+        }
+    }
+
+    if (stage === 'IB') {
+        if (g <= 2) {
+            if (lvsi === 'none') return { group: 'intermediate', label: '中リスク', cssClass: 'risk-int' };
+            if (lvsi === 'focal') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+            if (lvsi === 'substantial') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+        }
+        if (g === 3) {
+            if (lvsi === 'none') return { group: 'high-intermediate', label: '中高リスク', cssClass: 'risk-hi-int' };
+            return { group: 'high', label: '高リスク', cssClass: 'risk-high' };
+        }
+    }
+
+    return { group: 'intermediate', label: '中リスク', cssClass: 'risk-int',
+        note: '情報不足のため暫定的に中リスクとしています。全ての項目を入力してください。' };
+}
+
+function classifyRisk(data) {
+    const result = _classifyRisk(data);
+    if ((!data.p53 || data.p53 === 'unknown') &&
+        result.group !== 'high' && result.group !== 'advanced') {
+        result.provisional = true;
+    }
+    return result;
+}
+
+function getESMORecommendation(riskResult, data) {
+    const { group } = riskResult;
+    const { stage, histology, mmr, p53, er, pole } = data;
+
+    switch (group) {
+        case 'low':
+            return `
+                <div class="treatment-box obs">
+                    <h5>推奨: 経過観察 (Observation)</h5>
+                    <p>術後補助療法は不要です。定期的なフォローアップを行います。</p>
+                </div>
+                <div class="note-box" style="margin-top:10px;">
+                    PORTEC-4a試験: POLEmut症例の補助療法省略が支持されています。
+                </div>`;
+
+        case 'intermediate':
+            return `
+                <div class="treatment-box rt">
+                    <h5>推奨: 腟断端照射 (VBT) または 経過観察</h5>
+                    <ul>
+                        <li>VBT (腟腔内小線源治療) が標準的選択肢</li>
+                        <li>60歳未満で他のリスク因子がない場合、経過観察も許容</li>
+                    </ul>
+                </div>
+                <div class="treatment-box rt" style="margin-top:8px;">
+                    <h5>VBT プロトコル</h5>
+                    <ul>
+                        <li>HDR: 21Gy/3回 (腟表面線量) または 7Gy×3回 (5mm深)</li>
+                        <li>照射範囲: 腟断端上部 1/2~2/3</li>
+                    </ul>
+                </div>`;
+
+        case 'high-intermediate':
+            return `
+                <div class="treatment-box rt">
+                    <h5>第一選択: 外照射 (EBRT/IMRT) ± VBT</h5>
+                    <ul>
+                        <li>骨盤EBRT (IMRT推奨): 45-50.4Gy / 25-28回</li>
+                        <li>VBTブースト追加を検討</li>
+                    </ul>
+                </div>
+                <div class="treatment-box rt" style="margin-top:8px;">
+                    <h5>代替: VBT単独</h5>
+                    <ul>
+                        <li>LVSI限局的で他のリスク因子が少ない場合</li>
+                        <li>HDR: 21-24Gy/3回</li>
+                    </ul>
+                </div>
+                <p style="font-size:0.82rem; margin-top:8px; color:var(--text-secondary);">
+                    PORTEC-2試験: 中高リスクにおいてVBT単独はEBRTと同等の腟再発制御を示しましたが、骨盤再発リスクが高い症例ではEBRTが推奨されます。
+                </p>`;
+
+        case 'high': {
+            let html = `
+                <div class="treatment-box rt">
+                    <h5>推奨: 外照射 (EBRT/IMRT) + VBT</h5>
+                    <ul>
+                        <li>骨盤EBRT (IMRT): 45-50.4Gy / 25-28回</li>
+                        <li>VBTブースト: HDR 10-15Gy / 2-3回</li>`;
+            if (['IIIC1','IIIC2'].includes(stage)) {
+                html += `<li>傍大動脈リンパ節転移陽性: 拡大照射野を検討</li>`;
+            }
+            if (stage === 'II') {
+                html += `<li>頸部間質浸潤: 子宮傍組織のカバレッジを含む照射設計</li>`;
+            }
+            html += `</ul></div>`;
+
+            if (isStageIII(stage) || isNonEndometrioid(histology) || p53 === 'abnormal') {
+                html += `
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>化学療法の追加を推奨</h5>
+                    <ul>
+                        <li>TC療法: カルボプラチン (AUC5-6) + パクリタキセル (175mg/m²) 3-6サイクル</li>
+                        <li>Sandwich法: 化学療法→放射線治療→化学療法</li>
+                        <li>または逐次投与: 放射線治療後に化学療法</li>
+                    </ul>
+                </div>
+                <p style="font-size:0.82rem; margin-top:8px; color:var(--text-secondary);">
+                    PORTEC-3試験: 高リスク症例でのChemoRT (シスプラチン併用→TC) は放射線単独と比較してRFS改善を示しました (特にp53abn, Stage III, 漿液性癌)。
+                </p>`;
+            } else {
+                html += `
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>化学療法の追加を検討</h5>
+                    <ul>
+                        <li>Stage II G3 LVSI+, Stage IB G3 LVSI+: 化学療法の追加を考慮</li>
+                        <li>TC療法: カルボプラチン + パクリタキセル</li>
+                    </ul>
+                </div>`;
+            }
+            return html;
+        }
+
+        case 'advanced': {
+            let html = `
+                <div class="treatment-box chemo">
+                    <h5>推奨: 全身化学療法 ± 放射線治療</h5>
+                    <ul>
+                        <li>TC療法: カルボプラチン (AUC5-6) + パクリタキセル (175mg/m²) 6サイクル</li>
+                        <li>局所制御目的でのRT追加を検討</li>
+                    </ul>
+                </div>`;
+
+            if (mmr === 'dMMR') {
+                html += `
+                <div class="treatment-box immuno" style="margin-top:8px;">
+                    <h5>免疫チェックポイント阻害薬の併用を推奨</h5>
+                    <ul>
+                        <li>dMMR/MSI-H: TC + ドスタルリマブ (RUBY試験)</li>
+                        <li>または TC + ペムブロリズマブ (NRG-GY018試験)</li>
+                    </ul>
+                </div>`;
+            }
+
+            if (er === 'positive') {
+                html += `
+                <div class="treatment-box hormone" style="margin-top:8px;">
+                    <h5>ホルモン療法の考慮</h5>
+                    <ul>
+                        <li>ER陽性低悪性度: MPA (メドロキシプロゲステロン酢酸エステル) またはアロマターゼ阻害薬</li>
+                        <li>化学療法不耐容例や維持療法として検討</li>
+                    </ul>
+                </div>`;
+            }
+
+            html += `
+                <div class="treatment-box rt" style="margin-top:8px;">
+                    <h5>放射線治療の役割</h5>
+                    <ul>
+                        <li>化学療法後の地固め照射 (consolidation RT)</li>
+                        <li>骨盤EBRT (IMRT) ± VBT</li>
+                        <li>症状緩和目的の照射</li>
+                    </ul>
+                </div>`;
+            return html;
+        }
+    }
+    return '';
+}
+
+function getNCCNRecommendation(riskResult, data) {
+    const { group } = riskResult;
+    const { stage, histology, grade, lvsi, mmr, p53, er, myo } = data;
+    const g = parseInt(grade) || 2;
+
+    if (isNonEndometrioid(histology) || histology === 'mixed') {
+        if (stage === 'IA' && myo === 'none') {
+            return `
+                <div class="treatment-box obs">
+                    <h5>選択肢1: 経過観察</h5>
+                    <p>筋層浸潤なしの場合、経過観察も許容されます。</p>
+                </div>
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>選択肢2: 化学療法 ± VBT</h5>
+                    <ul>
+                        <li>TC療法 ± 腟断端照射</li>
+                        <li>特に漿液性癌: 化学療法を推奨する意見が強い</li>
+                    </ul>
+                </div>`;
+        }
+        let html = `
+            <div class="treatment-box chemo">
+                <h5>推奨: 化学療法 + 放射線治療</h5>
+                <ul>
+                    <li>TC療法 6サイクル</li>
+                    <li>骨盤EBRT (IMRT) + VBT</li>
+                    <li>Volume-directed RT (腫瘍量に応じた照射野設計)</li>
+                </ul>
+            </div>`;
+        if (mmr === 'dMMR' && (isStageIII(stage) || isStageIV(stage))) {
+            html += `
+            <div class="treatment-box immuno" style="margin-top:8px;">
+                <h5>免疫療法の追加</h5>
+                <ul>
+                    <li>TC + ペムブロリズマブ or ドスタルリマブ</li>
+                </ul>
+            </div>`;
+        }
+        return html;
+    }
+
+    switch (group) {
+        case 'low':
+            return `
+                <div class="treatment-box obs">
+                    <h5>推奨: 経過観察</h5>
+                    <p>術後補助療法不要。3-6ヶ月毎のフォローアップ。</p>
+                </div>`;
+
+        case 'intermediate':
+            return `
+                <div class="treatment-box obs">
+                    <h5>選択肢1: 経過観察</h5>
+                    <p>特にリスク因子が1つのみの場合。</p>
+                </div>
+                <div class="treatment-box rt" style="margin-top:8px;">
+                    <h5>選択肢2: 腟断端照射 (VBT)</h5>
+                    <p>HDR 21Gy/3回 または同等線量。</p>
+                </div>`;
+
+        case 'high-intermediate':
+            return `
+                <div class="treatment-box rt">
+                    <h5>選択肢1: 骨盤EBRT/IMRT ± VBT</h5>
+                    <ul>
+                        <li>45-50.4Gy / 25-28回 ± VBTブースト</li>
+                    </ul>
+                </div>
+                <div class="treatment-box rt" style="margin-top:8px;">
+                    <h5>選択肢2: VBT単独</h5>
+                    <p>リスク因子が限定的な場合。</p>
+                </div>
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>選択肢3: 化学療法 ± VBT</h5>
+                    <ul>
+                        <li>TC療法 ± VBT (GOG-249試験に基づく)</li>
+                        <li>NCCNでは化学療法ベースの選択肢も提示</li>
+                    </ul>
+                </div>`;
+
+        case 'high': {
+            let html = `
+                <div class="treatment-box rt">
+                    <h5>選択肢1: EBRT/IMRT + VBT ± 化学療法</h5>
+                    <ul>
+                        <li>骨盤EBRT: 45-50.4Gy + VBTブースト</li>
+                        <li>TC療法の追加を強く推奨 (特にStage III)</li>
+                    </ul>
+                </div>
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>選択肢2: 化学療法 + RT (Sandwich法)</h5>
+                    <ul>
+                        <li>TC 3サイクル → 骨盤RT + VBT → TC 3サイクル</li>
+                        <li>Stage III-IVAで推奨</li>
+                    </ul>
+                </div>`;
+            if (isStageIII(stage)) {
+                html += `
+                <div class="treatment-box chemo" style="margin-top:8px;">
+                    <h5>選択肢3: 化学療法単独</h5>
+                    <ul>
+                        <li>GOG-258: ChemoRTと化学療法単独でOS差なし</li>
+                        <li>ただし局所制御はRT追加が優位</li>
+                    </ul>
+                </div>`;
+            }
+            return html;
+        }
+
+        case 'advanced': {
+            let html = `
+                <div class="treatment-box chemo">
+                    <h5>推奨: 全身化学療法</h5>
+                    <ul>
+                        <li>TC療法 6サイクル (第一選択)</li>
+                        <li>± Tumor-directed RT (局所制御目的)</li>
+                    </ul>
+                </div>`;
+            if (mmr === 'dMMR') {
+                html += `
+                <div class="treatment-box immuno" style="margin-top:8px;">
+                    <h5>免疫療法併用を推奨</h5>
+                    <ul>
+                        <li>TC + ペムブロリズマブ or ドスタルリマブ</li>
+                        <li>dMMR/MSI-H: PFS の有意な延長 (RUBY, NRG-GY018)</li>
+                    </ul>
+                </div>`;
+            }
+            if (mmr !== 'dMMR') {
+                html += `
+                <div class="treatment-box immuno" style="margin-top:8px;">
+                    <h5>pMMR/MSSの場合</h5>
+                    <ul>
+                        <li>TC + レンバチニブ/ペムブロリズマブ (2次治療以降)</li>
+                        <li>1次治療: TC ± ドスタルリマブも選択肢</li>
+                    </ul>
+                </div>`;
+            }
+            if (er === 'positive' && g <= 2) {
+                html += `
+                <div class="treatment-box hormone" style="margin-top:8px;">
+                    <h5>ホルモン療法</h5>
+                    <ul>
+                        <li>ER陽性G1-2: レトロゾール, MPA, 酢酸メゲストロール</li>
+                        <li>化学療法後の維持療法または化学療法不耐容例</li>
+                    </ul>
+                </div>`;
+            }
+            return html;
+        }
+    }
+    return '';
+}
+
+function getRTDetail(riskResult, data) {
+    const { group } = riskResult;
+    const { stage } = data;
+
+    if (group === 'low') {
+        return '<p style="color:var(--text-secondary); font-size:0.85rem;">低リスク: 放射線治療は不要です。</p>';
+    }
+
+    let html = '';
+
+    if (group === 'intermediate') {
+        html = `
+            <div class="treatment-box rt">
+                <h5>腟腔内小線源治療 (VBT / Brachytherapy)</h5>
+                <ul>
+                    <li><strong>線量:</strong> HDR 21Gy/3回 (腟粘膜面線量) または 7Gy×3回 (5mm深)</li>
+                    <li><strong>代替:</strong> HDR 24Gy/3回, 30Gy/5回 など施設プロトコルに準ずる</li>
+                    <li><strong>照射範囲:</strong> 腟断端上部 1/2~2/3 (3-4cm)</li>
+                    <li><strong>アプリケータ:</strong> シリンダー型が標準</li>
+                    <li><strong>開始時期:</strong> 術後8-12週以内</li>
+                </ul>
+            </div>`;
+        return html;
+    }
+
+    html += `
+        <div class="treatment-box rt">
+            <h5>外照射 (EBRT) - IMRT推奨</h5>
+            <ul>
+                <li><strong>線量:</strong> 45-50.4Gy / 25-28回 (1.8Gy/回)</li>
+                <li><strong>照射技術:</strong> IMRT/VMAT推奨 (腸管・膀胱線量低減)</li>
+                <li><strong>照射野:</strong> 骨盤照射 (閉鎖・内腸骨・外腸骨・仙骨前リンパ節領域)</li>`;
+
+    if (['IIIC2'].includes(stage)) {
+        html += `<li><strong>拡大照射野:</strong> 傍大動脈リンパ節領域まで拡大 (上縁: 腎血管レベル)</li>`;
+    }
+    if (['IIIC1','IIIC2'].includes(stage)) {
+        html += `<li><strong>総腸骨リンパ節:</strong> カバレッジに含める</li>`;
+    }
+    if (stage === 'II') {
+        html += `<li><strong>子宮傍組織:</strong> 頸部間質浸潤に対し十分なカバレッジ</li>`;
+    }
+
+    html += `
+                <li><strong>OAR制約 (IMRT):</strong></li>
+                <ul>
+                    <li>小腸: V45Gy &lt; 195cc, Dmax &lt; 52Gy</li>
+                    <li>直腸: V40Gy &lt; 80%, V50Gy &lt; 50%</li>
+                    <li>膀胱: V45Gy &lt; 65%</li>
+                    <li>大腿骨頭: V40Gy &lt; 15%, Dmax &lt; 50Gy</li>
+                    <li>骨髄: V10Gy &lt; 90%, V20Gy &lt; 75%</li>
+                </ul>
+            </ul>
+        </div>`;
+
+    if (group !== 'advanced' || !['IVB'].includes(stage)) {
+        html += `
+        <div class="treatment-box rt" style="margin-top:8px;">
+            <h5>腟断端ブースト (VBT)</h5>
+            <ul>
+                <li><strong>EBRT後ブースト:</strong> HDR 10-15Gy / 2-3回 (5mm深)</li>
+                <li><strong>照射範囲:</strong> 腟断端上部 1/3 (2-3cm)</li>
+                <li><strong>タイミング:</strong> EBRT終了後1-2週以内に開始</li>
+                <li><strong>アプリケータ:</strong> シリンダー型、腟断端に密着</li>
+            </ul>
+        </div>`;
+    }
+
+    if (group === 'high' || group === 'advanced') {
+        html += `
+        <div class="treatment-box rt" style="margin-top:8px;">
+            <h5>化学放射線療法 (ChemoRT) プロトコル</h5>
+            <ul>
+                <li><strong>PORTEC-3レジメン:</strong></li>
+                <ul>
+                    <li>RT中: シスプラチン 50mg/m² (Day1, 22) 併用</li>
+                    <li>RT後: カルボプラチン (AUC5) + パクリタキセル (175mg/m²) 4サイクル</li>
+                </ul>
+                <li><strong>Sandwich法:</strong></li>
+                <ul>
+                    <li>TC 3サイクル → 骨盤RT (IMRT) + VBT → TC 3サイクル</li>
+                </ul>
+            </ul>
+        </div>`;
+    }
+
+    html += `
+        <div class="treatment-box rt" style="margin-top:8px;">
+            <h5>治療スケジュール</h5>
+            <ul>
+                <li><strong>EBRT開始:</strong> 術後6-8週 (12週以内推奨)</li>
+                <li><strong>EBRT期間:</strong> 5-5.5週間 (25-28回)</li>
+                <li><strong>VBTブースト:</strong> EBRT終了後1-2週以内</li>
+                <li><strong>化学療法 (併用時):</strong> RT終了後3-4週で開始</li>
+            </ul>
+        </div>`;
+
+    return html;
+}
+
+function getMolecularTxConsideration(data) {
+    const { mmr, p53, er, pole, histology } = data;
+    let html = '';
+    let show = false;
+
+    if (mmr === 'dMMR') {
+        show = true;
+        html += `
+        <div class="treatment-box immuno">
+            <h5>dMMR/MSI-H 関連</h5>
+            <ul>
+                <li><strong>進行・再発例 (1次治療):</strong>
+                    <ul>
+                        <li>TC + ドスタルリマブ (RUBY試験: PFS HR 0.28)</li>
+                        <li>TC + ペムブロリズマブ (NRG-GY018: PFS HR 0.30)</li>
+                    </ul>
+                </li>
+                <li><strong>再発例 (2次治療以降):</strong>
+                    <ul>
+                        <li>ペムブロリズマブ単独 (MSI-H固形癌に対するtumor-agnostic承認)</li>
+                        <li>ドスタルリマブ単独</li>
+                    </ul>
+                </li>
+                <li><strong>Lynch症候群スクリーニング:</strong> 遺伝カウンセリングの紹介を検討</li>
+            </ul>
+        </div>`;
+    }
+
+    if (p53 === 'abnormal') {
+        show = true;
+        html += `
+        <div class="treatment-box chemo" style="margin-top:8px;">
+            <h5>p53異常関連</h5>
+            <ul>
+                <li>高リスク: ChemoRT (PORTEC-3レジメン) のベネフィットが最も大きいサブグループ</li>
+                <li>RFS改善: PORTEC-3でのサブ解析で有意なベネフィット</li>
+                <li>HER2過剰発現の確認を検討 (特に漿液性癌)</li>
+            </ul>
+        </div>`;
+    }
+
+    if (er === 'positive') {
+        show = true;
+        html += `
+        <div class="treatment-box hormone" style="margin-top:8px;">
+            <h5>ER陽性関連</h5>
+            <ul>
+                <li>再発時のホルモン療法の選択肢あり</li>
+                <li>低悪性度再発: MPA, 酢酸メゲストロール, レトロゾール</li>
+                <li>予後良好因子として評価</li>
+            </ul>
+        </div>`;
+    }
+
+    if (er === 'negative' && (histology === 'endometrioid')) {
+        show = true;
+        html += `
+        <div class="treatment-box" style="margin-top:8px; border-left-color: #c62828;">
+            <h5 style="color:#c62828;">ER陰性: 注意</h5>
+            <ul>
+                <li>ER陰性の類内膜癌は予後不良因子</li>
+                <li>ホルモン療法の適応なし</li>
+                <li>より積極的な補助療法を検討</li>
+            </ul>
+        </div>`;
+    }
+
+    if (pole === 'mutated') {
+        show = true;
+        html += `
+        <div class="treatment-box obs" style="margin-top:8px;">
+            <h5>POLEmut関連</h5>
+            <ul>
+                <li>予後極めて良好: 5年RFS 95%以上</li>
+                <li>PORTEC-4a: 補助療法の省略が支持される</li>
+                <li>Stage I-II: 経過観察が推奨される方向</li>
+                <li>Stage III: 個別判断 (エビデンス限定的)</li>
+            </ul>
+        </div>`;
+    }
+
+    return { html, show };
+}
+
+function histologyLabel(h) {
+    const map = {
+        'endometrioid': '類内膜癌',
+        'serous': '漿液性癌',
+        'clear_cell': '明細胞癌',
+        'carcinosarcoma': '癌肉腫',
+        'undifferentiated': '未分化癌',
+        'dedifferentiated': '脱分化癌',
+        'mixed': '混合癌',
+        'mucinous': '粘液性癌'
+    };
+    return map[h] || h;
+}
+
+function assess() {
+    const histology = getSelect('histology');
+    const stage = getSelect('stage');
+    const grade = getVal('grade');
+    const lvsi = getVal('lvsi');
+    const myo = getVal('myo');
+    const residual = getVal('residual');
+    const pole = getVal('pole');
+    const mmr = getVal('mmr');
+    const p53 = getVal('p53');
+    const er = getVal('er');
+
+    if (!histology || !stage) {
+        alert('組織型と進行期は必須です。');
+        return;
+    }
+
+    if ((histology === 'endometrioid' || histology === 'mucinous') && !grade) {
+        alert('類内膜癌の場合、分化度 (Grade) を選択してください。');
+        return;
+    }
+
+    const data = { histology, stage, grade, lvsi: lvsi || 'none', myo: myo || 'none',
+                   residual: residual || 'none', pole, mmr, p53, er };
+
+    const riskResult = classifyRisk(data);
+
+    buildSummary(data);
+    buildRiskResult(riskResult);
+
+    const molWarnings = getMolecularWarnings(data);
+    buildMolecularWarnings(molWarnings, riskResult);
+
+    document.getElementById('esmo-content').innerHTML = getESMORecommendation(riskResult, data);
+    document.getElementById('nccn-content').innerHTML = getNCCNRecommendation(riskResult, data);
+    document.getElementById('rt-detail-body').innerHTML = getRTDetail(riskResult, data);
+
+    const molTx = getMolecularTxConsideration(data);
+    const molCard = document.getElementById('molecular-tx-card');
+    if (molTx.show) {
+        molCard.style.display = 'block';
+        document.getElementById('molecular-tx-body').innerHTML = molTx.html;
+    } else {
+        molCard.style.display = 'none';
+    }
+
+    switchTab('esmo');
+
+    const resultSection = document.getElementById('result-section');
+    resultSection.classList.add('show');
+    setTimeout(() => resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function buildSummary(data) {
+    const body = document.getElementById('summary-body');
+    let html = `
+        <table class="summary-table">
+            <tr><th>項目</th><th>入力値</th></tr>
+            <tr><td>組織型</td><td>${histologyLabel(data.histology)}</td></tr>`;
+
+    if (data.histology === 'endometrioid' || data.histology === 'mucinous') {
+        html += `<tr><td>分化度</td><td>G${data.grade}</td></tr>`;
+    }
+
+    const stageLabels = {
+        'IA':'Stage IA', 'IB':'Stage IB', 'II':'Stage II',
+        'IIIA':'Stage IIIA', 'IIIB':'Stage IIIB', 'IIIC1':'Stage IIIC1', 'IIIC2':'Stage IIIC2',
+        'IVA':'Stage IVA', 'IVB':'Stage IVB'
+    };
+    html += `<tr><td>FIGO 2023</td><td>${stageLabels[data.stage] || data.stage}</td></tr>`;
+
+    const lvsiLabels = { 'none':'なし', 'focal':'限局的 (Focal)', 'substantial':'広範 (Substantial)' };
+    html += `<tr><td>LVSI</td><td>${lvsiLabels[data.lvsi] || '未入力'}</td></tr>`;
+
+    const myoLabels = { 'none':'なし', 'less50':'<1/2', 'ge50':'≥1/2' };
+    html += `<tr><td>筋層浸潤</td><td>${myoLabels[data.myo] || '未入力'}</td></tr>`;
+
+    html += `</table>`;
+
+    html += `<div class="molecular-summary" style="margin-top:10px;">`;
+
+    if (data.pole === 'mutated') html += `<span class="mol-tag pole-mut">POLE Mut</span>`;
+    else if (data.pole === 'wildtype') html += `<span class="mol-tag pole-wt">POLE WT</span>`;
+    else html += `<span class="mol-tag" style="background:#eceff1;color:#607d8b;">POLE 未検査</span>`;
+
+    if (data.mmr === 'dMMR') html += `<span class="mol-tag mmr-d">dMMR/MSI-H</span>`;
+    else if (data.mmr === 'pMMR') html += `<span class="mol-tag mmr-p">pMMR/MSS</span>`;
+    else html += `<span class="mol-tag" style="background:#eceff1;color:#607d8b;">MMR 未検査</span>`;
+
+    if (data.p53 === 'abnormal') html += `<span class="mol-tag p53-abn">p53 Abn</span>`;
+    else if (data.p53 === 'wildtype') html += `<span class="mol-tag p53-wt">p53 WT</span>`;
+    else html += `<span class="mol-tag" style="background:#ffcdd2;color:#b71c1c;">p53 未検査 ⚠</span>`;
+
+    if (data.er === 'positive') html += `<span class="mol-tag er-pos">ER+</span>`;
+    else if (data.er === 'negative') html += `<span class="mol-tag er-neg">ER-</span>`;
+    else html += `<span class="mol-tag" style="background:#eceff1;color:#607d8b;">ER 未検査</span>`;
+
+    html += `</div>`;
+    body.innerHTML = html;
+}
+
+function buildRiskResult(riskResult) {
+    const card = document.getElementById('risk-card');
+    card.className = `result-card ${riskResult.cssClass}`;
+
+    document.getElementById('risk-badge').textContent = riskResult.label;
+    const labelEl = document.getElementById('risk-label');
+    if (riskResult.provisional) {
+        labelEl.innerHTML = 'ESMO/ESTRO/ESP 分子統合リスク分類 <span class="provisional-badge">暫定</span>';
+    } else {
+        labelEl.textContent = 'ESMO/ESTRO/ESP 分子統合リスク分類';
+    }
+
+    let bodyHtml = `<h4>リスクグループ</h4>
+        <p><strong>${riskResult.label}</strong>`;
+
+    const groupDescriptions = {
+        'low': '補助療法は通常不要です。',
+        'intermediate': 'VBTまたは経過観察が選択肢です。',
+        'high-intermediate': 'EBRTまたはVBTを中心とした補助療法が推奨されます。',
+        'high': '放射線治療 + 化学療法を含む積極的な補助療法が推奨されます。',
+        'advanced': '全身化学療法を主軸に、放射線治療の追加を検討します。'
+    };
+    bodyHtml += ` - ${groupDescriptions[riskResult.group] || ''}</p>`;
+
+    if (riskResult.note) {
+        bodyHtml += `<div class="note-box" style="margin-top:8px;">${riskResult.note}</div>`;
+    }
+
+    document.getElementById('risk-body').innerHTML = bodyHtml;
+}
+
+function switchTab(tab) {
+    const tabs = document.querySelectorAll('.esmo-nccn-tabs button');
+    const esmo = document.getElementById('esmo-content');
+    const nccn = document.getElementById('nccn-content');
+
+    tabs.forEach(t => t.classList.remove('active'));
+    esmo.classList.remove('active');
+    nccn.classList.remove('active');
+
+    if (tab === 'esmo') {
+        tabs[0].classList.add('active');
+        esmo.classList.add('active');
+    } else {
+        tabs[1].classList.add('active');
+        nccn.classList.add('active');
+    }
+}
+
+function toggleRef() {
+    const body = document.getElementById('ref-body');
+    body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function resetForm() {
+    document.getElementById('histology').value = '';
+    document.getElementById('stage').value = '';
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    ['pole', 'mmr', 'p53', 'er'].forEach(name => {
+        const el = document.querySelector(`input[name="${name}"][value="unknown"]`);
+        if (el) el.checked = true;
+    });
+    document.getElementById('grade-group').classList.remove('hidden');
+    document.getElementById('result-section').classList.remove('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

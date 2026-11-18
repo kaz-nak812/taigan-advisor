@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Blue rounded background -->
+  <rect width="180" height="180" rx="36" fill="#1565c0"/>
+
+  <!-- Left fallopian tube -->
+  <path d="M62 76 C52 68 38 70 28 65" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Left fimbria -->
+  <path d="M28 65 C24 62 20 64 16 61" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28 65 C22 67 19 70 16 69" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28 65 C24 68 22 72 20 73" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Left ovary -->
+  <ellipse cx="12" cy="66" rx="10" ry="8" fill="white"/>
+
+  <!-- Right fallopian tube -->
+  <path d="M118 76 C128 68 142 70 152 65" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Right fimbria -->
+  <path d="M152 65 C156 62 160 64 164 61" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M152 65 C158 67 161 70 164 69" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M152 65 C156 68 158 72 160 73" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Right ovary -->
+  <ellipse cx="168" cy="66" rx="10" ry="8" fill="white"/>
+
+  <!-- Uterus body -->
+  <path d="M90 44
+           C72 44 58 56 58 74
+           C58 90 65 103 76 110
+           L76 124
+           L104 124
+           L104 110
+           C115 103 122 90 122 74
+           C122 56 108 44 90 44 Z"
+        fill="white"/>
+
+  <!-- Uterine cavity (inner blue shape) -->
+  <path d="M90 56
+           C81 56 74 63 74 73
+           C74 83 78 92 84 97
+           L84 110
+           L96 110
+           L96 97
+           C102 92 106 83 106 73
+           C106 63 99 56 90 56 Z"
+        fill="#1565c0" opacity="0.25"/>
+
+  <!-- Cervix -->
+  <rect x="80" y="122" width="20" height="14" rx="5" fill="white"/>
+</svg>
